@@ -2,7 +2,7 @@
 - block:
   - name: setup time zone
     file:
-      src: "/usr/share/zoneinfo{{ sys_config_timezone }}"
+      src: "/usr/share/zoneinfo/{{ sys_config_timezone }}"
       dest: /etc/localtime
       state: link
 
@@ -41,7 +41,7 @@
 
 - block:
   - name: set hostname
-    hostname: name={{ hostname | mandatory }}
+    hostname: name={{ sys_config_hostname | mandatory }}
 
   # Systems using systemd require fallback for chroot
   rescue:
@@ -52,5 +52,5 @@
 
   - name: fallback - set hostname runtime
     command: hostname -F /etc/hostname
-    when: ansible_hostname != base_hostname
+    when: ansible_hostname != sys_config_hostname
   tags: hostname
