@@ -1,0 +1,6 @@
+---
+- name: locale-gen
+  command: locale-gen
+  register: result
+  failed_when: result.stdout.find('error') != -1
+  listen: generate locales

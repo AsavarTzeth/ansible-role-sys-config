@@ -1,0 +1,6 @@
+{{ ansible_managed | comment }}
+
+{% for o in sys_config_locale_gen %}
+{{ o | regex_replace('\.',' ') }}
+{% endfor %}
+{{ sys_config_locale_lang | regex_replace('\.',' ') }}

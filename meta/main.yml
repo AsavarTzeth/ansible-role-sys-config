@@ -1,0 +1,16 @@
+galaxy_info:
+  author: Patrik Nilsson
+  description: user management role
+  license: BSD
+  min_ansible_version: 2.2
+  github_branch: master
+
+  platforms:
+    - name: ArchLinux
+      versions:
+        - all
+        - any
+
+  galaxy_tags: ['hostname','locale','locale-gen','timezone']
+
+dependencies: []

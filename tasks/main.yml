@@ -1,0 +1,56 @@
+---
+- block:
+  - name: setup time zone
+    file:
+      src: "/usr/share/zoneinfo{{ sys_config_timezone }}"
+      dest: /etc/localtime
+      state: link
+
+  - name: generate /etc/adjtime
+    command: hwclock --systohc
+    args:
+      creates: /etc/adjtime
+
+  - name: get /etc/adjtime
+    command: cat /etc/adjtime
+    changed_when: false
+    register: adjtime
+
+  - name: set hardware clock to utc
+    command: hwclock --systohc --utc
+    when: adjtime.stdout.find('UTC') == -1
+  tags: time-zone
+
+- block:
+  - name: setup locale.gen
+    template:
+      src: locale.gen.j2
+      dest: /etc/locale.gen
+    notify: generate locales
+
+  - name: setup locale.conf
+    template:
+      src: locale.conf.j2
+      dest: /etc/locale.conf
+
+  - name: setup vconsole.conf
+    template:
+      src: vconsole.conf.j2
+      dest: /etc/vconsole.conf
+  tags: locale
+
+- block:
+  - name: set hostname
+    hostname: name={{ hostname | mandatory }}
+
+  # Systems using systemd require fallback for chroot
+  rescue:
+  - name: fallback - set hostname persistent
+    template:
+      src: hostname.j2
+      dest: /etc/hostname
+
+  - name: fallback - set hostname runtime
+    command: hostname -F /etc/hostname
+    when: ansible_hostname != base_hostname
+  tags: hostname
