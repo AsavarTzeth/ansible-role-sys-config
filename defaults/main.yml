@@ -1,11 +1,13 @@
 ---
-# Default time zone with author in mind, pupular demand allowed
+# The default system time zone
 sys_config_timezone: Europe/Stockholm
 
-# Default locales with author in mind, popular demand allowed
-sys_config_locale_lang: sv_SE.UTF-8
-sys_config_locale_gen: ['en_US.UTF-8']
+# The default locales to generate on the system, if the host
+# supports it. The first list entry will set the $LANG value.
+sys_config_locale: ['sv_SE.UTF-8','en_US.UTF-8']
+
+# The default virtual console keymap
 sys_config_vc_keymap: sv-latin1
 
-# Default hostname
+# The default system hostname
 sys_config_hostname: "{{ inventory_hostname }}"

@@ -1,0 +1,8 @@
+---
+sys_config_locale_files:
+  - src: vconsole.conf.j2
+    dest: /etc/vconsole.conf
+    mode: '0644'
+  - src: locale.conf.j2
+    dest: /etc/locale.conf
+    mode: '0644'

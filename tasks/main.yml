@@ -22,21 +22,22 @@
   tags: time-zone
 
 - block:
-  - name: setup locale.gen
-    template:
-      src: locale.gen.j2
-      dest: /etc/locale.gen
-    notify: generate locales
+  # Ensure locale-gen is used on host
+  - name: stat locale.gen
+    stat: path=/etc/locale.gen
+    register: file
 
-  - name: setup locale.conf
-    template:
-      src: locale.conf.j2
-      dest: /etc/locale.conf
+  - name: generate locales
+    locale_gen: name={{ item }}
+    with_items: "{{ sys_config_locale }}"
+    when: file.stat.exists
 
-  - name: setup vconsole.conf
+  - name: setup locale & keymap
     template:
-      src: vconsole.conf.j2
-      dest: /etc/vconsole.conf
+      src: "{{ item.src }}"
+      dest: "{{ item.dest }}"
+      mode: "{{ item.mode }}"
+    with_items: "{{ sys_config_locale_files }}"
   tags: locale
 
 - block:
