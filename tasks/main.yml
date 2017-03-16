@@ -3,7 +3,7 @@
   timezone:
     name: "{{ sys_config_timezone }}"
     hwclock: "{{ sys_config_rtc | default(omit) }}"
-  tags: time-zone
+  tags: time-zone,timezone,hwclock,rtc
 
 - block:
   # Ensure locale-gen is used on host
@@ -22,7 +22,7 @@
       dest: "{{ item.dest }}"
       mode: "{{ item.mode }}"
     with_items: "{{ sys_config_locale_files }}"
-  tags: locale
+  tags: locale,keymap
 
 - block:
   - name: set hostname
