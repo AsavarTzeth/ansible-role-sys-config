@@ -21,6 +21,10 @@ Role Variables
     # Sets the system time zone
     sys_config_timezone:   (default: Europe/Stockholm)
 
+    # Sets if rtc time will be stored in utc or localtime
+    # By default nothing is changed.
+    sys_config_rtc:        (undefined by default) (values: UTC or local)
+
     # Sets the locales to generate on the system, if the host
     # supports it. The first list entry will set the $LANG value.
     sys_config_locale:     (default: ['sv_SE.UTF-8','en_US.UTF-8'])

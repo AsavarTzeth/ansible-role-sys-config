@@ -1,24 +1,8 @@
 ---
-- block:
-  - name: setup time zone
-    file:
-      src: "/usr/share/zoneinfo/{{ sys_config_timezone }}"
-      dest: /etc/localtime
-      state: link
-
-  - name: generate /etc/adjtime
-    command: hwclock --systohc
-    args:
-      creates: /etc/adjtime
-
-  - name: get /etc/adjtime
-    command: cat /etc/adjtime
-    changed_when: false
-    register: adjtime
-
-  - name: set hardware clock to utc
-    command: hwclock --systohc --utc
-    when: adjtime.stdout.find('UTC') == -1
+- name: setup timezone
+  timezone:
+    name: "{{ sys_config_timezone }}"
+    hwclock: "{{ sys_config_rtc | default(omit) }}"
   tags: time-zone
 
 - block:
