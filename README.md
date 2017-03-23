@@ -45,7 +45,7 @@ None
 Example Playbook
 ----------------
 
-1) Set various basic system settings
+Set various basic system settings
 
     - hosts: all
       roles:
