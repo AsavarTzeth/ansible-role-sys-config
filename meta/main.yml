@@ -1,6 +1,6 @@
 galaxy_info:
   author: Patrik Nilsson
-  description: user management role
+  description: basic system configuration role
   license: BSD
   min_ansible_version: 2.2
   github_branch: master
